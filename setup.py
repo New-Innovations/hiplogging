@@ -1,6 +1,6 @@
 from setuptools import setup
 
-VERSION='1.2.1'
+VERSION='1.2.2'
 
 setup(
     description='HipChat support for the Python logging module',
@@ -13,7 +13,6 @@ setup(
     license='MIT',
     keywords=['hipchat', 'log', 'logging'],
     download_url = 'https://github.com/invernizzi/hiplogging/tarball/%s' % VERSION,
-    install_requires=['hypchat'],
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Developers',

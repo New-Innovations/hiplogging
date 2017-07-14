@@ -3,14 +3,13 @@
 HipChat's API v2 via HypChat (https://github.com/RidersDiscountCom/HypChat)
 """
 import logging
-from hypchat import HypChat
-
+from HipChat import HipChatRoom
 
 class HipChatHandler(logging.Handler):
 
     def __init__(self, access_token, room_name, endpoint='https://api.hipchat.com'):
         logging.Handler.__init__(self)
-        self.room = HypChat(access_token, endpoint).get_room(room_name)
+        self.room = HipChatRoom(access_token, endpoint, room_name)
 
     def emit(self, record):
         if hasattr(record, "color"):
@@ -21,10 +20,14 @@ class HipChatHandler(logging.Handler):
             notify = bool(record.notify)
         else:
             notify = self.__notify_for_level(record.levelno)
+        sender = None
+        if hasattr(record,"sender"):
+            sender = record.sender
         self.room.notification(
             message=self.format(record),
             color=color,
-            notify=notify
+            notify=notify,
+            sender=sender
         )
 
     def __color_for_level(self, levelno):
@@ -48,5 +51,3 @@ class HipChatHandler(logging.Handler):
         if levelno == logging.DEBUG:
             return False
         return False
-
-
